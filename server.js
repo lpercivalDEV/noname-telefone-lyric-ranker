@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 
 var db
 
-MongoClient.connect('mongodb://demo:demo@ds125146.mlab.com:25146/savage', (err, database) => {
+MongoClient.connect('mongodb://demo:nonameDemo@ds257848.mlab.com:57848/noname-telefone', (err, database) => {
   if (err) return console.log(err)
   db = database
   app.listen(process.env.PORT || 3000, () => {
@@ -19,8 +19,12 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  db.collection('messages').find().toArray((err, result) => {
+  var messages = db.collection('messages').find();
+  messages.toArray((err, result) => {
     if (err) return console.log(err)
+    result.forEach(function(element) {
+        element.total = element.thumbUp - element.thumbDown;
+    });
     res.render('index.ejs', {messages: result})
   })
 })
@@ -36,8 +40,8 @@ app.post('/messages', (req, res) => {
 app.put('/messages', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
+    $inc: {
+      thumbUp: 1
     }
   }, {
     sort: {_id: -1},
@@ -47,6 +51,22 @@ app.put('/messages', (req, res) => {
     res.send(result)
   })
 })
+
+app.put('/messages2', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $inc: {
+        thumbDown: 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
