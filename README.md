@@ -2,10 +2,12 @@
 # Noname - Telefone Lyric Ranker
 This is a simple little application I made where users can submit and rank different lyrics from Noname's album Telefone.
 
+## Live Demo:
+https://lyric-ranker-app.herokuapp.com/
+
 ![alt tag](https://github.com/lpercivalDEV/noname-telefone-lyric-ranker/blob/master/nonamePreview.png)
 
-##Live Demo:
-https://lyric-ranker-app.herokuapp.com/
+
 
 ## Installation
 1. Clone my repo
