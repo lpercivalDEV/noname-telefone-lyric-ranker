@@ -4,6 +4,8 @@ This is a simple little application I made where users can submit and rank diffe
 
 ![alt tag](https://github.com/lpercivalDEV/noname-telefone-lyric-ranker/blob/master/nonamePreview.png)
 
+##Live Demo:
+https://lyric-ranker-app.herokuapp.com/
 
 ## Installation
 1. Clone my repo
